@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Typing</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		<link rel="apple-touch-icon" href="favicon.ico" />
+		<link rel="apple-touch-icon-precomposed" href="favicon.ico" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<meta name="viewport" content="user-scalable=no, width=device-width" />
+		<meta name="viewport" content="minimum-scale=1.0,width=device-width,maximum-scale=1,user-scalable=no" />
+		<style>
+			body {text-align:center;font-family:arial;padding-top:2vh}
+			textarea {font-family:arial;width:1000px;height:40vh;font-size:10vh}
+			input {font-size:5vh;padding:2vh;width:15vw;cursor:pointer}
+			@media (max-width: 1000px) {
+				textarea {width:90%;height:30vh;font-size:4vh}
+				input {font-size:3vh;width:45%}
+			}
+		</style>
+		<script>
+			var speak = () => {
+				var text = document.getElementsByTagName('textarea')[0].value, word;
+				if(text.length>0){
+					word = new SpeechSynthesisUtterance(text);
+					word.lang = 'en';
+					word.rate = 1;
+					speechSynthesis.speak(word);
+				}
+			},
+			clear_ = () => {
+				var text = document.getElementsByTagName('textarea')[0];
+				text.value = '';
+				text.focus();
+			}
+		</script>
+	</head>
+	<body ontouchstart>
+		<textarea></textarea>
+		<br /><br />
+		<input type="button" value="Clear" onclick="clear_()" /> 
+		<input type="button" value="Speak" onclick="speak()" />
