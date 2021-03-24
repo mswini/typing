@@ -11,32 +11,46 @@
 		<meta name="viewport" content="minimum-scale=1.0,width=device-width,maximum-scale=1,user-scalable=no" />
 		<style>
 			body {text-align:center;font-family:arial;padding-top:2vh}
-			textarea {font-family:arial;width:1000px;height:40vh;font-size:8vh}
+			textarea {font-family:arial;width:95%;height:20vh;font-size:8vh;padding:1vh}
 			input {font-size:5vh;padding:2vh;width:15vw;cursor:pointer}
 			@media (max-width: 1000px) {
 				textarea {width:90%;height:30vh;font-size:4vh}
 				input {font-size:3vh;width:45%}
 			}
 		</style>
+	</head>
+	<body ontouchstart>
+		<textarea autofocus>mommy</textarea>
+		<br /><br />
+		<input type="button" value="Clear" onclick="clear_()" /> 
+		<input type="button" value="Speak" onclick="speak()" />
 		<script>
-			var speak = () => {
-				var text = document.getElementsByTagName('textarea')[0].value, word;
-				if(text.length>0){
-					word = new SpeechSynthesisUtterance(text);
+			var text = document.getElementsByTagName('textarea')[0],
+			speak = () => {
+				text.value = text.value.replace(/\n/g,'');
+				var val = text.value, word;
+				if(val.length>0){
+					word = new SpeechSynthesisUtterance(val);
 					word.lang = 'en';
-					word.rate = 1;
+					word.rate = 0.8;
 					speechSynthesis.speak(word);
 				}
 			},
 			clear_ = () => {
-				var text = document.getElementsByTagName('textarea')[0];
 				text.value = '';
 				text.focus();
-			}
+			};
+			text.addEventListener('keyup', ({key}) => {
+				if (key === 'Enter') {
+					text.value = text.value.replace(/\n/g,'');
+					text.focus();
+				}
+			})
+			text.addEventListener('keydown', ({key}) => {
+
+				if (key === 'Enter') {
+					text.value = text.value.replace(/\n/g,'');
+					speak();
+				}
+			})
 		</script>
-	</head>
-	<body ontouchstart>
-		<textarea>The only way to do great work is to love what you do.</textarea>
-		<br /><br />
-		<input type="button" value="Clear" onclick="clear_()" /> 
-		<input type="button" value="Speak" onclick="speak()" />
